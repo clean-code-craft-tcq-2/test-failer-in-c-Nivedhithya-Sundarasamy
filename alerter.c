@@ -23,18 +23,17 @@ float farenheitToCelciusConvertor (float farenheit) {
 	return celcius;
 }
 
-int alertInCelcius(float farenheit) {
+void alertInCelcius(float farenheit, int (*fpNetworkAlert) (float)) {
 	float celcius = farenheitToCelciusConvertor(farenheit);
-	int returnCode = networkAlertStub(celcius);
-	return returnCode;
+	int returnCode = (*fpNetworkAlert)(celcius);
+	networkAlertFailureCheck(returnCode);
 }
 
 int main() {
-	int returnCode;
-	returnCode = alertInCelcius(400.5);
-	networkAlertFailureCheck(returnCode);
-	returnCode = alertInCelcius(303.6);
-	networkAlertFailureCheck(returnCode);
+	assert(farenheitToCelciusConvertor(400.5) == 204.722222f);
+	assert(farenheitToCelciusConvertor(303.6) == 150.888888f);
+	alertInCelcius(400.5, networkAlertStub);
+	alertInCelcius(303.6, networkAlertStub);
 	printf("%d alerts failed.\n", alertFailureCount);
 	assert(alertFailureCount == 1);
 	printf("All is well (maybe!)\n");
