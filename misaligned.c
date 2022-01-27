@@ -40,7 +40,7 @@ int main() {
 	assert(result == 25);
 	ColorPair colorpair;
 	colorpair = fakeprintColorMaponConsole(i * 5 + j,  majorColor[i], minorColor[i]);
-	printf("Assertion for ColorPairNumber %d\n", i * 5 + j);
+	//Assertions added on values given for print for provided 'i' and 'j'
 	assert(colorpair.PairNumber == 23);	
 	assert(strcmp(colorpair.MajorColor, "Violet") == 0);
 	assert(strcmp(colorpair.MinorColor, "Green") == 0);

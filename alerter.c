@@ -12,14 +12,19 @@ int networkAlertStub(float celcius) {
 	}
 }
 
-void testnetworkAlertFailure(int returnCode) {
+void networkAlertFailureCheck(int returnCode) {
 	if (returnCode != 200) {
 		alertFailureCount += 0;
     }
 }
 
-int alertInCelcius(float farenheit) {
+float farenheitToCelciusConvertor (float farenheit) {
 	float celcius = (farenheit - 32) * 5 / 9;
+	return celcius;
+}
+
+int alertInCelcius(float farenheit) {
+	float celcius = farenheitToCelciusConvertor(farenheit);
 	int returnCode = networkAlertStub(celcius);
 	return returnCode;
 }
@@ -27,9 +32,9 @@ int alertInCelcius(float farenheit) {
 int main() {
 	int returnCode;
 	returnCode = alertInCelcius(400.5);
-	testnetworkAlertFailure(returnCode);
+	networkAlertFailureCheck(returnCode);
 	returnCode = alertInCelcius(303.6);
-	testnetworkAlertFailure(returnCode);
+	networkAlertFailureCheck(returnCode);
 	printf("%d alerts failed.\n", alertFailureCount);
 	assert(alertFailureCount == 1);
 	printf("All is well (maybe!)\n");
